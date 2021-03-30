@@ -1,38 +1,40 @@
 #include <iostream>
 using namespace std;
 
-int check(int arr[], int index)
+int check(int arr[], int index, int tmp)
 {
-    int test[sizeof(arr) / 4];
     for (int i = 0; i < index; i++)
     {
-        test[arr[i]]++;
-    }
-    for (int i = 0; i < index; i++)
-    {
-        if (test[i] > 1)
+        if (arr[i] == tmp)
             return 0;
     }
     return 1;
 }
 
-void choose(int index, int arr[], int max)
+void choose(int *arr, int size, int max, int index)
 {
-    if (index == sizeof(arr) / 4)
+    if (index == size)
     {
-        arr[index] = index;
+        for (int i = 0; i < size; i++)
+            cout << arr[i] << " ";
+        cout << endl;
         return;
     }
-    if (check(arr, max))
+    for (int i = 1; i <= max; i++)
     {
-        choose(index + 1, arr, max);
+        arr[index] = i;
+        if (check(arr, index, i))
+        {
+            choose(arr, size, max, index + 1);
+        }
     }
 }
 
-void main()
+int main()
 {
     int N, M;
     cin >> N >> M;
     int arr[M];
-    choose(arr, N);
+    choose(arr, M, N, 0);
+    return 0;
 }

@@ -1,6 +1,9 @@
 #include <iostream>
 using namespace std;
 
+//code for c
+
+int count = 0;
 int n;
 int board[15];
 
@@ -19,14 +22,14 @@ int nqueen(int cdx, int count)
     if (cdx == n)
     {
         count++;
-        return count;
+        return;
     }
     for (int i = 0; i < n; i++)
     {
         board[cdx] = i;
         if (promissing(cdx))
         {
-            count += nqueen(cdx + 1, count);
+            nqueen(cdx + 1, count);
         }
     }
     return count;
@@ -34,7 +37,6 @@ int nqueen(int cdx, int count)
 
 int main()
 {
-    int count;
     cin >> n;
     count = nqueen(0, 0);
     cout << count << endl;
