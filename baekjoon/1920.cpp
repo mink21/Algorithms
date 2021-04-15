@@ -2,46 +2,56 @@
 #include <algorithm>
 using namespace std;
 
-void sort(int *arr)
+int arr[100001];
+
+void check(int n, int key)
 {
+    int start = 0;
+    int end = n - 1;
+    int mid;
+
+    while (end - start >= 0)
+    {
+        mid = (start + end) / 2;
+        if (arr[mid] == key)
+        {
+            cout << "1"
+                 << "\n";
+            return;
+        }
+        else if (arr[mid] > key)
+        {
+            end = mid - 1;
+        }
+        else
+        {
+            start = mid + 1;
+        }
+    }
+
+    cout << "0"
+         << "\n";
+    return;
 }
 
 void solve()
 {
     //read input
-    int N, M;
+    int N;
     cin >> N;
-    int arr[N];
     for (int i = 0; i < N; i++)
     {
         cin >> arr[i];
     }
-    cin >> M;
-    int arr2[M];
-    for (int i = 0; i < M; i++)
-    {
-        cin >> arr2[i];
-    }
-    int flags[M];
+    sort(arr, arr + N);
 
     //calculate
-    sort(arr2);
+    int M, temp;
+    cin >> M;
     for (int i = 0; i < M; i++)
     {
-        flags[i] = 0;
-        for (int j = 0; j < N; j++)
-        {
-            if (arr2[i] == arr[j])
-            {
-                flags[i] = 1;
-            }
-        }
-    }
-
-    //print output
-    for (int i = 0; i < M; i++)
-    {
-        cout << flags[i] << "\n";
+        cin >> temp;
+        check(N, temp);
     }
 }
 
