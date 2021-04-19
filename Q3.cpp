@@ -1,99 +1,62 @@
 #include <iostream>
-#include <string>
+#include <cmath>
 using namespace std;
 
-int M, N, P;
+int N = 10000;
+bool isPrime[10001];
+int R[1000];
 
-int check(bool matrix[50][50], int index)
+void findPrimes()
 {
-    int u, v, i, j;
-    cin >> u >> v;
+    for (int i = 2; i < N + 1; i++)
+        isPrime[i] = 1;
 
-    //if someone doesnt know any managers
-    /*i = 0;
-    while (i < M)
+    int sqrtn = sqrt(N);
+    for (int i = 2; i <= sqrtn; i++)
     {
-        if (i != u && matrix[u][i])
-            break;
-        i++;
-        if (i == M)
-            return -1;
+        if (!isPrime[i])
+            continue;
+        for (int j = i * 2; j < N + 1; j += i)
+            isPrime[j] = 0;
     }
-    i = 0;
-    while (i < M)
-    {
-        if (i != v && matrix[v][i])
-            break;
-        i++;
-        if (i == M)
-            return -1;
-    }*/
-
-    //they already know each other
-    if (matrix[u][v])
-        return 0;
-
-    //they know a manager
-    i = 0;
-    while (i < M)
-    {
-        if (matrix[u][i] && matrix[v][i])
-            return index + 1;
-        i++;
-    }
-
-    //recursive
-    for (i = 0; i < M; i++)
-    {
-        if (matrix[u][i])
-        {
-            for (j = 0; j < M; j++)
-            {
-                if (matrix[i][j])
-                {
-                    matrix[u][j] = true;
-                    matrix[j][u] = true;
-                    check(matrix, index + 1);
-                }
-            }
-        }
-    }
-    return -1;
 }
 
-void solve()
+void findR()
 {
-    string str;
-    bool relations[50][50];
-
-    cin >> M >> N >> P;
-    for (int i = 0; i < M + N; i++)
+    int index = 0;
+    for (int i = 2; i < N + 1; i++)
     {
-        cin >> str;
-        for (int j = 0; j < M + N; j++)
-        {
-            if (str[j] == 'Y')
-                relations[i][j] = true;
-        }
+        if (!isPrime[i])
+            continue;
+        else
+            R[index++] = i;
     }
+    for (int i = 0; i < 1000; i++)
+        R[i] = R[i] * R[i + 1];
+}
 
-    int ans;
-    for (int i = 0; i < P; i++)
+int solve()
+{
+    int Z, idx = 0;
+    cin >> Z;
+    while (R[idx] <= Z)
     {
-        ans = check(relations, 0);
-        cout << ans << " ";
+        idx++;
     }
+    idx = idx - 1;
+    return R[idx];
 }
 
 int main(void)
 {
-    int test_case;
+    int test_case, answer;
     cin >> test_case;
-    for (int i = 0; i < test_case; i++)
+    findPrimes();
+    findR();
+    for (int i = 1; i <= test_case; i++)
     {
-        cout << "Case #" << i + 1 << ": ";
-        solve();
-        cout << "\n";
+        answer = solve();
+        cout << "Case #" << i << ": " << answer << "\n";
     }
     return 0;
 }

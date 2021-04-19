@@ -1,37 +1,35 @@
 #include <iostream>
-#include <algorithm>
+#include <string>
 using namespace std;
 
-int pets[100];
-int treats[101];
+int N;
+int ans[200000];
 
-int solve()
+void solve()
 {
-    int N, num = 1, sum = 0;
-    cin >> N;
+    string str;
+    cin >> N >> str;
     for (int i = 0; i < N; i++)
     {
-        cin >> pets[i];
+        ans[i] = 1;
+        if (str[i] > str[i - 1])
+            ans[i] = ans[i - 1] + 1;
     }
-    sort(pets, pets + N);
-    for (int i = 0; i < N; i++)
-    {
-        sum += num;
-        if (pets[i] == pets[i + 1])
-            continue;
-        num++;
-    }
-    return sum;
 }
 
 int main(void)
 {
-    int test_case, ans;
+    int test_case;
     cin >> test_case;
     for (int i = 0; i < test_case; i++)
     {
-        ans = solve();
-        cout << "Case #" << i + 1 << ": " << ans << "\n";
+        cout << "Case #" << i + 1 << ": ";
+        solve();
+        for (int i = 0; i < N; i++)
+        {
+            cout << ans[i] << " ";
+        }
+        cout << "\n";
     }
     return 0;
 }

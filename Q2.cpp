@@ -1,71 +1,90 @@
 #include <iostream>
 using namespace std;
 
-int L[101];
-char str[2501];
+int markStart, markStep;
 
-void solve()
+int subarray(int arr[], int start, int size)
 {
-    int N, size = 1, idx = 0;
-    cin >> N;
-    for (int i = 1; i <= N; i++)
+    if (size == 1)
+        return 1;
+    else if (size == 2)
+        return 2;
+    else
     {
-        cin >> L[i];
-        size += L[i];
+        int count = 1, step, ans, idx;
+        //count consecutive
+        step = arr[start + 1] - arr[start];
+        idx = start + 1;
+        while ((arr[idx] - arr[idx - 1]) == step)
+        {
+            count++;
+            idx++;
+            if (idx == size)
+                break;
+        }
+
+        ans = subarray(arr, start + 1, size - 1);
+        count = (count < ans) ? ans : count;
+
+        return count;
     }
-    str[idx++] = 'A';
-    for (int i = 1; i <= N; i++)
+}
+
+void findStep(int arr[], int cons, int size)
+{
+    int idx, step, count;
+    for (int i = 0; i < size - 1; i++)
     {
-        //odd block
-        if (i % 2 == 1)
+        idx = i;
+        step = arr[i] - arr[i + 1];
+        count = 1;
+        while ((arr[idx] - arr[idx + 1]) == step)
         {
-            while (L[i] > 1)
+            idx++;
+            count++;
+            if (count == cons)
             {
-                str[idx] = str[idx - 1] + 1;
-                L[i]--;
-                idx++;
-            }
-            //last char of odd block
-            if (i == N)
-            {
-                str[idx] = str[idx - 1] + 1;
-            }
-            else if (str[idx - 1] + 1 > (65 + L[i + 1]))
-            {
-                str[idx] = str[idx - 1] + 1;
-                idx++;
-            }
-            else
-            {
-                str[idx] = 65 + L[i + 1];
-                idx++;
+                markStart = i;
+                markStep = step;
+                return;
             }
         }
-        //even block
-        else
-        {
-            while (L[i] > 0)
-            {
-                str[idx] = 64 + L[i];
-                L[i]--;
-                idx++;
-            }
-        }
+    }
+}
+
+void check(int arr[])
+{
+}
+
+void solve(int test_case)
+{
+    int size, ans, start;
+    cin >> size;
+    int n[size];
+    for (int i = 0; i < size; i++)
+        cin >> n[i];
+
+    ans = subarray(n, 0, size);
+    if (ans == size - 1)
+        ans++;
+    else if (ans != size)
+    {
+        //still need to figure out
+        findStep(n, ans, size);
+        check(n);
+        n[markStart - 1] = n[markStart] + markStep;
+        ans = subarray(n, 0, size);
     }
 
-    for (int i = 0; i < size; i++)
-        cout << str[i];
+    cout << "Case #" << test_case << ": " << ans << "\n";
 }
 
 int main(void)
 {
     int test_case;
     cin >> test_case;
-    for (int i = 0; i < test_case; i++)
+    for (int i = 1; i <= test_case; i++)
     {
-        cout << "Case #" << i + 1 << ": ";
-        solve();
-        cout << "\n";
+        solve(i);
     }
-    return 0;
 }
