@@ -2,28 +2,31 @@
 using namespace std;
 
 int N, M;
-int num[8];
+int num[7];
 
-void solve(int n, int count)
+void func(int index)
 {
-    if (count == M)
+    if (index == M)
     {
         for (int i = 0; i < M; i++)
             cout << num[i] << " ";
-        cout << endl;
-    }
-    if (n > N)
+        cout << "\n";
         return;
+    }
 
-    num[count] = n;
-    solve(n, count + 1);
-    solve(n + 1, count + 1);
-    solve(n + 1, count);
+    for (int i = 1; i <= N; i++)
+    {
+        num[index] = i;
+        func(index + 1);
+    }
 }
 
 int main(void)
 {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+
     cin >> N >> M;
-    solve(1, 0);
+    func(0);
     return 0;
 }
