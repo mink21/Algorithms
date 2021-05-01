@@ -1,19 +1,26 @@
 #include <iostream>
 using namespace std;
 
-int main(void){
-    int row, column, min;
-    cin>>row>>column;
-    int arr[column];
-    int min[row];
-    
-    for(int i = 0; i<row; i++){
-        min = 0;
-        for(int j = 0; j<column; j++){
-            cin>>arr[j];
-            if(arr[j]<min)
-                min = arr[j];
+int main(void)
+{
+    int row, column;
+    int min, max, temp;
+    cin >> row >> column;
+
+    max = 0;
+    for (int i = 0; i < row; i++)
+    {
+        min = 10001;
+        for (int j = 0; j < column; j++)
+        {
+            cin >> temp;
+            if (temp < min)
+                min = temp;
         }
-        min[i] = min;
+        if (min > max)
+            max = min;
     }
+
+    cout << max << "\n";
+    return 0;
 }
