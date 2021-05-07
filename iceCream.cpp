@@ -28,10 +28,11 @@ void print_arr()
         for (int j = 0; j < m; j++)
         {
             if (graph[i][j])
-                cout << "1 ";
+                cout << "1";
             else
-                cout << "0 ";
+                cout << "0";
         }
+        cout << "\n";
     }
 }
 
@@ -44,7 +45,7 @@ int main(void)
         cin >> str;
         for (int j = 0; j < m; j++)
         {
-            if (str[j] == 0)
+            if (str[j] == '1')
                 graph[i][j] = true;
         }
     }
@@ -55,7 +56,11 @@ int main(void)
         for (int j = 0; j < m; j++)
         {
             if (dfs(i, j))
+            {
+                //print_arr();
+                //cout << "\n";
                 result++;
+            }
         }
     }
 
