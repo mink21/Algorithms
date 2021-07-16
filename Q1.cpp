@@ -1,30 +1,53 @@
 #include <iostream>
+
 using namespace std;
 
 int solve()
 {
-    int n, k;
-    cin >> n >> k;
-    char str[n];
-    for (int i = 0; i < n; i++)
-        cin >> str[i];
-
-    int result = 0;
-    for (int i = 0; i < n / 2; i++)
+    int n, ans = 0, temp, d_temp;
+    cin >> n;
+    int dArray[100001] = {};
+    bool visited[100001] = {};
+    for (int i = 1; i < n + 1; i++)
     {
-        result *= str[i] - 96;
+        cin >> dArray[i];
     }
-    return result;
+
+    for (int i = 1; i < n + 1; i++)
+    {
+        if (visited[i] == 1)
+            continue;
+        else
+        {
+            ans++;
+            visited[i] = 1;
+            temp = i;
+            d_temp = dArray[temp];
+            if ((temp + d_temp < n + 1) && (visited[temp + d_temp] == 1))
+                ans--;
+
+            while ((temp + d_temp < n + 1) && (visited[temp + d_temp] == 0))
+            {
+                visited[temp + d_temp] = 1;
+                temp = temp + d_temp;
+                d_temp = dArray[temp];
+                if ((temp + d_temp < n + 1) && (visited[temp + d_temp] == 1))
+                    ans--;
+            }
+        }
+    }
+    return ans;
 }
 
-int main(void)
+int main(int argc, char **argv)
 {
-    int test_cases, result;
-    cin >> test_cases;
-    for (int i = 0; i < test_cases; i++)
+    int test_case, answer;
+    cin >> test_case;
+    for (int i = 0; i < test_case; i++)
     {
-        result = solve();
-        cout << "Case #" << i + 1 << " " << result << "\n";
+        answer = solve();
+        cout << "Case #" << i + 1 << "\n"
+             << answer << "\n";
     }
     return 0;
 }
