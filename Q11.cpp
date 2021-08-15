@@ -3,6 +3,7 @@
 //2 is snake body
 
 #include <iostream>
+#include <queue>
 using namespace std;
 
 int n, k, l, ans = 0;
@@ -28,7 +29,7 @@ int main(void){
     }
 
     cin>>l;
-    int posx = 1, posy = 1, posx_end = 1, posy_end = 1;
+    int posx = 1, posy = 1;
     int head = 0, length = 1;
     int dx[4] = {1, 0, -1, -};
     int dy[4] = {0, -1, 0, 1};
@@ -40,13 +41,14 @@ int main(void){
         for(int j = 0; j<temp1; j++){
             posx += dx[head];
             posy += dy[head];
+            box[posx][posy] = 2;
             ans++;
             if(checkDeath)
                 break;
             if(box[posx][posy] == 1){
                 continue;
             }else{
-                //remove end
+                //remove tail use queue
             }
         }
         if(temp3 == 'L'){
