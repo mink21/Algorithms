@@ -32,7 +32,7 @@ void solve(void){
         int y = pq.top().second.second;
         pq.pop();
         if(dist[x][y] <distance) continue;
-        for(int i = 0; i<4; i++){
+        for(int i = 0; i<4; i++){ 
             int nx = x + dx[i];
             int ny = y + dy[i];
             if(nx<0 || nx>=n || ny<0 || ny>= n) continue;
