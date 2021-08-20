@@ -2,23 +2,45 @@
 using namespace std;
 
 int n, m;
-int left_up, left_down, left;
 int gold[20][20];
 int dp[20][20];
 
 void dynamicGold(int a, int b){
-    if(b == 0)
-        left_up = 0;
-    else
-        left_up = dp[a-1][b-1];
+    int left[3];
+    int max = 0;
     
-    if(b == n-1)
-        left_down = 0;
+    //left up
+    if(a == 0)
+        left[0] = 0;
     else
-        left_down = dp[a-1][b+1];
+        left[0] = dp[a-1][b-1];
+    
+    //left
+    left[1] = dp[a][b-1];
+    
+    //left down
+    if(a == (n-1))
+        left[2] = 0;
+    else
+        left[2] = dp[a+1][b-1];
 
-    left = dp[a-1][b];
+    //find max
+    for(int i = 0; i<3; i++){
+        if(max<left[i]){
+            max = left[i];
+        }
+    }
+    dp[a][b] = gold[a][b] + max;
+}
 
+void printDP(){
+    for(int i = 0; i<n; i++){
+        for(int j = 0; j<m; j++){
+            cout<<dp[i][j]<<" ";
+        }
+        cout<<"\n";
+    }
+     cout<<"\n";
 }
 
 void solve(void){
@@ -30,9 +52,10 @@ void solve(void){
         }
     }
 
-    for(int i = 1; i<n; i++){
-        for(int j = 0; j<m; j++){
-            dynamicGold(i, j);
+    for(int i = 1; i<m; i++){
+        for(int j = 0; j<n; j++){
+            dynamicGold(j, i);
+            //printDP();
         }
     }
 
