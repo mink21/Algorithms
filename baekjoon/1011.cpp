@@ -17,7 +17,6 @@ void solve(void)
     {
         cout << 2 * ans << endl;
     }
-    else if (ans * ans + ans < (y - x) && (y - x) < (a + 1) * (a + 1))
     else if (ans * ans + ans < (y - x) && (y - x) < (ans + 1) * (ans + 1))
     {
         cout << 2 * ans + 1 << endl;
