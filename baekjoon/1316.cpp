@@ -1,42 +1,48 @@
 #include <iostream>
 #include <string>
+
 using namespace std;
 
-int solve()
+bool solve(void)
 {
-    int alpha[26] = {};
-    string str;
-    cin >> str;
-    for (int i = 0; i < str.length(); i++)
+    string s;
+    cin >> s;
+
+    bool visited[26];
+    for (int i = 0; i < 26; i++)
     {
-        int num = str[i] - 97;
+        visited[i] = false;
+    }
 
-        /*cout << num << "  ";
-        for (int j = 0; j < 26; j++)
+    visited[s[0] - 97] = true;
+    for (int i = 1; i < s.size(); i++)
+    {
+        if (s[i] != s[i - 1])
         {
-            cout << alpha[j] << " ";
-        }
-        cout << endl;*/
-
-        if (alpha[num] == 0)
-        {
-            alpha[num]++;
-        }
-        else if (alpha[num] == 1 && str[num - 1] != str[num])
-        {
-            return 0;
+            if (visited[s[i] - 97])
+            {
+                return false;
+            }
+            else
+            {
+                visited[s[i] - 97] = true;
+            }
         }
     }
-    return 1;
+    return true;
 }
 
 int main(void)
 {
-    int N, ans = 0;
-    cin >> N;
-    for (int i = 0; i < N; i++)
+    int ans = 0;
+    int testcase;
+    cin >> testcase;
+    for (int i = 0; i < testcase; i++)
     {
-        ans += solve();
+        if (solve())
+        {
+            ans++;
+        }
     }
     cout << ans << endl;
     return 0;

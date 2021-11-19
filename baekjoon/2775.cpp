@@ -1,44 +1,43 @@
 #include <iostream>
+
 using namespace std;
 
-int building[14][14];
+int house[15][14];
 
-void calculate(){
-    for(int i = 0; i<14; i++){
-        for(int j= 0; j<14; j++){
-            if(i == 0)
-                building[i][j] = j+1;
-            else{
-                for(int k = 0; k<=j;k++){
-                    building[i][j] += building[i-1][k];
-                }
-            }      
-        }
+// calculate the number of people
+void calculate(void)
+{
+    // floor 0
+    for (int i = 0; i < 14; i++)
+    {
+        house[0][i] = i + 1;
     }
 
-}
-
-void print(){
-    for(int i = 0; i<14; i++){
-        for(int j = 0; j<14; j++){
-            cout<<building[i][j]<<" ";
+    // floor 1 to 14
+    for (int i = 1; i < 15; i++)
+    {
+        house[i][0] = 1;
+        for (int j = 1; j < 14; j++)
+        {
+            house[i][j] = house[i][j - 1] + house[i - 1][j];
         }
-        cout<<"\n";
     }
 }
 
-void solve(){
-    int n, k;
-    cin>>n>>k;
-    cout<<building[n][k-1]<<"\n";
+void solve(void)
+{
+    int k, n;
+    cin >> k >> n;
+    cout << house[k][n - 1] << endl;
 }
 
-int main(void){
-    int testcase, n, k;
-    cin>>testcase;
+int main(void)
+{
+    int testcase;
+    cin >> testcase;
     calculate();
-    print();
-    for(int i = 0; i<testcase; i++){
+    for (int i = 0; i < testcase; i++)
+    {
         solve();
     }
     return 0;
